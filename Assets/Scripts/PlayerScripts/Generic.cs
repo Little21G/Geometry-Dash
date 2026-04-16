@@ -4,9 +4,13 @@ static public class Generic
 {
     static public void VelocityLimit(float limit, Rigidbody2D rb)
     {
-        int gravityMultiplyer = (int)(Mathf.Abs(rb.linearVelocity.y));
-        if (rb.linearVelocity.y * -gravityMultiplyer > limit)
-            rb.linearVelocity = Vector2.up * -limit * gravityMultiplyer;
+{    int gravitySign = (int)Mathf.Sign(rb.gravityScale);
+
+    if (rb.linearVelocity.y * -gravitySign > limit)
+    {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, -limit * gravitySign);
+    }
+}
     }
     static public void createGamemode(Rigidbody2D rb, Movement host, bool onGroundRequired, float initialVelocity, float gravityScale, bool canHold = false, bool flipOnClick = false, float rotationMod = 0, float yVelocityLimit = Mathf.Infinity)
     {

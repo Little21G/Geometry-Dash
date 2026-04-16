@@ -8,14 +8,8 @@ public class PortalScript : MonoBehaviour
     public bool gravity;
     public int State;
 
-    void OnCollisionEnter2D(Collision2D collision)
+    public void initiatePortal(Movement movement)
     {
-        try
-        {
-            Movement movement = collision.gameObject.GetComponent<Movement>();
-
-            movement.ChangeThroughPortal(Gamemode, Speed, gravity ? 1 : -1, State);
-        }
-        catch { }
+        movement.ChangeThroughPortal(Gamemode, Speed, gravity ? 1 : -1, State);
     }
 }
