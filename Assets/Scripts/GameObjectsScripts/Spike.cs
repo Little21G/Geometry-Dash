@@ -18,8 +18,10 @@ public class Spike : MonoBehaviour
 
     void Die()
     {
-        // This is the classic Geometry Dash restart. 
-        // It asks Unity for the currently active level, and tells it to load it from the beginning.
+        // 1. Tell our AttemptManager that we died so it adds 1 to the counter!
+        AttemptManager.RegisterDeath();
+        
+        // 2. Reload the scene (Classic GD restart)
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
