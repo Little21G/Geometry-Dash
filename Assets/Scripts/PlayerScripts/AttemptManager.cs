@@ -1,43 +1,34 @@
 using UnityEngine;
-using TMPro; // Needed to talk to TextMeshPro UI
+using TMPro; // Needed for TextMeshPro
 
 public class AttemptManager : MonoBehaviour
 {
     [Header("UI References")]
-    public TextMeshProUGUI attemptText;
+    // Using TMP_Text works for both UI Canvas text AND World Space text!
+    public TMP_Text attemptText; 
+
+    // 'static' means this number floats in memory and survives scene reloads,
+    // but gets destroyed the moment you close the game.
+    public static int currentAttempts = 1;
 
     void Start()
     {
-        // Grab the current attempts from the computer's save file. 
-        // If it hasn't been created yet, default to 1.
-        int currentAttempts = PlayerPrefs.GetInt("LevelAttempts", 1);
-        
-        // Update the screen text
+        // Update the screen text the moment the level starts/reloads
         if (attemptText != null)
         {
             attemptText.text = "ATTEMPT " + currentAttempts;
         }
     }
 
-    // We make this "static" so the Spike script can call it instantly
-    // without needing to find the manager object first.
     public static void RegisterDeath()
     {
-        int currentAttempts = PlayerPrefs.GetInt("LevelAttempts", 1);
-        
-        // Add 1 to the attempts and save it back to the hard drive
-        PlayerPrefs.SetInt("LevelAttempts", currentAttempts + 1);
-        PlayerPrefs.Save();
+        // Add 1 to the temporary memory
+        currentAttempts++;
     }
     
-    void Update()
+    // Call this function later when you build a Main Menu "Exit" button!
+    public static void ResetAttemptsOnExit()
     {
-        // A handy cheat code so you can reset your attempts while testing!
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            PlayerPrefs.SetInt("LevelAttempts", 1);
-            PlayerPrefs.Save();
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-        }
+        currentAttempts = 1;
     }
 }
