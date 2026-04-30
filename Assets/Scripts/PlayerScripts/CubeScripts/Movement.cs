@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum Speeds { Slow = 0, Normal = 1, Fast = 2, Faster = 3, Fastest = 4 };
 public enum Gamemodes { Cube = 0, Ship = 1, Ball = 2, UFO = 3, Wave = 4, Robot = 5, Spider = 6 };
@@ -132,4 +133,25 @@ public class Movement : MonoBehaviour
         if (portal)
             portal.initiatePortal(this);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+{
+    // Make sure we are hitting the SolidBlocks map
+    if (collision.gameObject.CompareTag("Ground"))
+    {
+        ContactPoint2D contact = collision.GetContact(0);
+
+        // If the block is pushing us to the LEFT, we hit a wall!
+        if (contact.normal.x < -0.5f)
+        {
+            AttemptManager.RegisterDeath();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        // If the block is pushing UP, we landed safely!
+        else if (contact.normal.y > 0.5f)
+        {
+            // Put your jump reset / grounded code here
+        }
+    }
+}
 }
