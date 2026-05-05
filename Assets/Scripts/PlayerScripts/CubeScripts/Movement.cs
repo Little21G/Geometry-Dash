@@ -45,6 +45,7 @@ public class Movement : MonoBehaviour
  
     void Cube()
     {
+        // Fixed: Back to normal so you don't flip upside down!
         Generic.createGamemode(rb, this, true, 19.5269f, 9.057f, true, false, 409.1f);
     }
  
@@ -135,23 +136,23 @@ public class Movement : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
-{
-    // Make sure we are hitting the SolidBlocks map
-    if (collision.gameObject.CompareTag("Ground"))
     {
-        ContactPoint2D contact = collision.GetContact(0);
+        // Make sure we are hitting the SolidBlocks map
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            ContactPoint2D contact = collision.GetContact(0);
 
-        // If the block is pushing us to the LEFT, we hit a wall!
-        if (contact.normal.x < -0.5f)
-        {
-            AttemptManager.RegisterDeath();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-        // If the block is pushing UP, we landed safely!
-        else if (contact.normal.y > 0.5f)
-        {
-            // Put your jump reset / grounded code here
+            // If the block is pushing us to the LEFT, we hit a wall!
+            if (contact.normal.x < -0.5f)
+            {
+                AttemptManager.RegisterDeath();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            // If the block is pushing UP, we landed safely!
+            else if (contact.normal.y > 0.5f)
+            {
+                // Put your jump reset / grounded code here
+            }
         }
     }
-}
 }
