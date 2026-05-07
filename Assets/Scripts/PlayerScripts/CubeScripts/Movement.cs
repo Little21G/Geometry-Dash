@@ -45,8 +45,8 @@ public class Movement : MonoBehaviour
  
     void Cube()
     {
-        // Fixed: Back to normal so you don't flip upside down!
-        Generic.createGamemode(rb, this, true, 19.5269f, 9.057f, true, false, 409.1f);
+        // Jump power bumped to 22.0f for higher jumps, rotation matched to 380f to land flat!
+        Generic.createGamemode(rb, this, true, 22.0f, 9.057f, true, false, 380f);
     }
  
     void Ship()
@@ -63,7 +63,8 @@ public class Movement : MonoBehaviour
  
     void UFO()
     {
-        Generic.createGamemode(rb, this, false, 10.841f, 4.1483f, false, false, 0, 10.841f);
+        // Bumped up UFO jump height slightly as well to match the higher cube jump
+        Generic.createGamemode(rb, this, false, 12.5f, 4.1483f, false, false, 0, 12.5f);
     }
  
     void Wave()
@@ -94,7 +95,8 @@ public class Movement : MonoBehaviour
             if (Input.GetMouseButton(0) && onGroundProcessed && !gravityFlipped)
             {
                 rb.gravityScale = 0;
-                rb.linearVelocity = Vector2.up * 10.4f * Gravity;
+                // Bumped Robot jump power slightly too
+                rb.linearVelocity = Vector2.up * 11.5f * Gravity;
                 return;
             }
         }
