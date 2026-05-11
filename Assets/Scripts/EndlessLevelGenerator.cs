@@ -25,15 +25,21 @@ public class EndlessLevelGenerator : MonoBehaviour
 
     void Update()
     {
-        // 1. SPAWN NEW CHUNKS: If the player gets close to the end of the loaded line, spawn a new one
+        // 1. SPAWN NEW CHUNKS
         if (player.position.x > spawnX - (chunksToPreload * chunkWidth))
         {
             SpawnChunk();
+
+            // Trigger the score bonus every time a new chunk loads!
+            if (ScoreManager.instance != null)
+            {
+                ScoreManager.instance.AddChunkBonus();
+            }
         }
 
-        // 2. DELETE OLD CHUNKS: Only delete the oldest chunk if it is safely behind the player (Out of camera view)
+        // 2. DELETE OLD CHUNKS
         GameObject oldestChunk = activeChunks[0];
-        if (player.position.x - oldestChunk.transform.position.x > (chunkWidth * 2)) // Waits until it is 2 chunks behind you!
+        if (player.position.x - oldestChunk.transform.position.x > (chunkWidth * 2)) 
         {
             DeleteOldChunk();
         }
