@@ -32,6 +32,12 @@ public class PauseMenu : MonoBehaviour
         pauseScreenUI.SetActive(true); // Show the menu
         Time.timeScale = 0f;           // Freeze the game!
 
+        // --- NEW: Pause the music! ---
+        if (gameMusic != null)
+        {
+            gameMusic.Pause();
+        }
+
         // Get the current score from the ScoreManager
         float current = ScoreManager.instance.currentScore;
         
@@ -54,6 +60,12 @@ public class PauseMenu : MonoBehaviour
     {
         pauseScreenUI.SetActive(false); // Hide the menu
         Time.timeScale = 1f;            // Unfreeze the game!
+
+        // --- NEW: Unpause the music! ---
+        if (gameMusic != null)
+        {
+            gameMusic.UnPause();
+        }
     }
 
     public void Restart()
