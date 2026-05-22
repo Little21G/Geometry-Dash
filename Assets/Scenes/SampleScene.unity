@@ -5368,7 +5368,6 @@ GameObject:
   - component: {fileID: 1720922321}
   - component: {fileID: 1720922320}
   - component: {fileID: 1720922319}
-  - component: {fileID: 1720922323}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5470,6 +5469,9 @@ MonoBehaviour:
   Sprite: {fileID: 1688353855}
   Gravity: 1
   clickProcessed: 0
+  deathParticlesPrefab: {fileID: 8172565272151880691, guid: 05023299d95ba49feb53e45f4fcfba20, type: 3}
+  deathSound: {fileID: 8300000, guid: b791c4e4686c14c879e7c9879dc9da00, type: 3}
+  respawnDelay: 1.5
 --- !u!4 &1720922322
 Transform:
   m_ObjectHideFlags: 0
@@ -5486,18 +5488,6 @@ Transform:
   - {fileID: 1688353855}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1720922323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1720922318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ecc9fe6c9c3f4cc7b7b152a637411bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollision
 --- !u!1 &1785072712
 GameObject:
   m_ObjectHideFlags: 0

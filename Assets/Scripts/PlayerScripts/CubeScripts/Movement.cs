@@ -10,17 +10,22 @@ public class Movement : MonoBehaviour
 {
     public Speeds CurrentSpeed;
     public Gamemodes CurrentGamemode;
-    //                       0      1      2       3      4
     float[] SpeedValues = { 8.6f, 10.4f, 12.96f, 15.6f, 19.27f };
  
     public float GroundCheckRadius;
     public LayerMask GroundMask;
-    public Transform Sprite;
+    public Transform Sprite; 
  
     Rigidbody2D rb;
- 
     public int Gravity = 1;
     public bool clickProcessed = false;
+
+    [Header("Death Settings")]
+    public GameObject deathParticlesPrefab; 
+    public AudioClip deathSound; // <-- NEW: Slot for your audio file!
+    [SerializeField] private float respawnDelay = 1.0f; 
+    
+    private bool isDead = false; 
  
     void Start()
     {
@@ -29,6 +34,8 @@ public class Movement : MonoBehaviour
  
     void FixedUpdate()
     {
+        if (isDead) return;
+
         transform.position += Vector3.right * SpeedValues[(int)CurrentSpeed] * Time.deltaTime;
         Invoke(CurrentGamemode.ToString(), 0);
     }
@@ -43,30 +50,15 @@ public class Movement : MonoBehaviour
         return Physics2D.OverlapBox((Vector2)transform.position + (Vector2.right * 0.55f), Vector2.up * 0.8f + (Vector2.right * GroundCheckRadius), 0, GroundMask);
     }
  
-    void Cube()
-    {
-        // Jump power bumped to 22.0f for higher jumps, rotation matched to 380f to land flat!
-        Generic.createGamemode(rb, this, true, 22.0f, 9.057f, true, false, 380f);
-    }
- 
+    void Cube() { Generic.createGamemode(rb, this, true, 22.0f, 9.057f, true, false, 380f); }
     void Ship()
     {
         rb.gravityScale = 2.93f * (Input.GetMouseButton(0) ? -1 : 1) * Gravity;
         Generic.VelocityLimit(9.95f, rb);
         transform.rotation = Quaternion.Euler(0, 0, rb.linearVelocity.y * 2);
     }
- 
-    void Ball()
-    {
-        Generic.createGamemode(rb, this, true, 0, 6.2f, false, true);
-    }
- 
-    void UFO()
-    {
-        // Bumped up UFO jump height slightly as well to match the higher cube jump
-        Generic.createGamemode(rb, this, false, 12.5f, 4.1483f, false, false, 0, 12.5f);
-    }
- 
+    void Ball() { Generic.createGamemode(rb, this, true, 0, 6.2f, false, true); }
+    void UFO() { Generic.createGamemode(rb, this, false, 12.5f, 4.1483f, false, false, 0, 12.5f); }
     void Wave()
     {
         rb.gravityScale = 0;
@@ -79,9 +71,7 @@ public class Movement : MonoBehaviour
  
     void Robot()
     {
-        if (!Input.GetMouseButton(0))
-            clickProcessed = false;
- 
+        if (!Input.GetMouseButton(0)) clickProcessed = false;
         if(OnGround() && !clickProcessed && Input.GetMouseButton(0))
         {
             gravityFlipped = false;
@@ -89,72 +79,86 @@ public class Movement : MonoBehaviour
             robotXstart = transform.position.x;
             onGroundProcessed = true;
         }
- 
         if (Mathf.Abs(robotXstart - transform.position.x) <= 3)
         {
             if (Input.GetMouseButton(0) && onGroundProcessed && !gravityFlipped)
             {
                 rb.gravityScale = 0;
-                // Bumped Robot jump power slightly too
                 rb.linearVelocity = Vector2.up * 11.5f * Gravity;
                 return;
             }
         }
-        else if (Input.GetMouseButton(0))
-            onGroundProcessed = false;
- 
+        else if (Input.GetMouseButton(0)) onGroundProcessed = false;
         rb.gravityScale = 8.62f * Gravity;
         Generic.VelocityLimit(23.66f, rb);
     }
  
-    void Spider()
-    {
-        Generic.createGamemode(rb, this, true, 238.29f, 6.2f, false, true, 0, 238.29f);
-    }
+    void Spider() { Generic.createGamemode(rb, this, true, 238.29f, 6.2f, false, true, 0, 238.29f); }
  
     public void ChangeThroughPortal(Gamemodes Gamemode, Speeds Speed, int gravity, int State)
     {
         switch (State)
         {
-            case 0:
-                CurrentSpeed = Speed;
-                break;
-            case 1:
-                CurrentGamemode = Gamemode;
-                break;
-            case 2:
-                Gravity = gravity;
-                rb.gravityScale = Mathf.Abs(rb.gravityScale) * gravity;
-                gravityFlipped = true;
-                break;
+            case 0: CurrentSpeed = Speed; break;
+            case 1: CurrentGamemode = Gamemode; break;
+            case 2: Gravity = gravity; rb.gravityScale = Mathf.Abs(rb.gravityScale) * gravity; gravityFlipped = true; break;
         }
     }
  
     private void OnTriggerEnter2D(Collider2D collision)
     {
         PortalScript portal = collision.gameObject.GetComponent<PortalScript>();
-        if (portal)
-            portal.initiatePortal(this);
+        if (portal) portal.initiatePortal(this);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Make sure we are hitting the SolidBlocks map
+        if (isDead) return;
+
         if (collision.gameObject.CompareTag("Ground"))
         {
             ContactPoint2D contact = collision.GetContact(0);
-
-            // If the block is pushing us to the LEFT, we hit a wall!
             if (contact.normal.x < -0.5f)
             {
-                AttemptManager.RegisterDeath();
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-            // If the block is pushing UP, we landed safely!
-            else if (contact.normal.y > 0.5f)
-            {
-                // Put your jump reset / grounded code here
+                Die(); 
             }
         }
+    }
+
+    public void Die()
+    {
+        if (isDead) return; 
+
+        isDead = true; 
+        CancelInvoke(); 
+
+        // <-- NEW: Play the death sound! -->
+        if (deathSound != null)
+        {
+            // We play it at the camera's position so it is always loud and clear!
+            if (Camera.main != null)
+            {
+                AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position);
+            }
+        }
+
+        if (deathParticlesPrefab != null)
+        {
+            Instantiate(deathParticlesPrefab, transform.position, Quaternion.identity);
+        }
+
+        if (Sprite != null) Sprite.gameObject.SetActive(false);
+        rb.linearVelocity = Vector2.zero;
+        rb.gravityScale = 0;
+        this.enabled = false; 
+
+        AttemptManager.RegisterDeath();
+
+        Invoke("ReloadScene", respawnDelay);
+    }
+
+    private void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

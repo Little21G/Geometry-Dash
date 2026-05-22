@@ -3,7 +3,7 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static ScoreManager instance; // Makes it easy to talk to from other scripts
+    public static ScoreManager instance; 
 
     [Header("UI References")]
     public TextMeshProUGUI mainScoreText;
@@ -25,27 +25,29 @@ public class ScoreManager : MonoBehaviour
 
     void Update()
     {
-        // Add 3 points per second
+        // 1. Add points over time
         currentScore += pointsPerSecond * Time.deltaTime;
 
-        // Update the main score UI (rounds down to a clean whole number)
+        // 2. Update Main UI
         mainScoreText.text = "Score: " + Mathf.FloorToInt(currentScore).ToString();
+
+        // 3. ALWAYS CHECK FOR HIGH SCORE (Runs every frame)
+        float currentHigh = PlayerPrefs.GetFloat("HighScore", 0f);
+        if (currentScore > currentHigh)
+        {
+            PlayerPrefs.SetFloat("HighScore", currentScore);
+            PlayerPrefs.Save(); // Forces the game to save the new record immediately
+        }
     }
 
     public void AddChunkBonus()
     {
-        // Calculate the escalating bonus (100, then 105, 110, etc.)
         int bonusToGive = baseChunkBonus + (chunksBeaten * bonusIncreasePerChunk);
-        
-        // Add it to the score and increase our chunks beaten count
         currentScore += bonusToGive;
         chunksBeaten++;
 
-        // Spawn the cool floating text slightly below the main score!
-        Vector3 spawnPos = mainScoreText.transform.position - new Vector3(0, 50f, 0); // Spawns 50 pixels lower
+        Vector3 spawnPos = mainScoreText.transform.position - new Vector3(0, 50f, 0); 
         GameObject popup = Instantiate(floatingTextPrefab, spawnPos, Quaternion.identity, canvasTransform);
-        
-        // Tell the popup what number to display
         popup.GetComponent<FloatingText>().Setup(bonusToGive);
     }
 }
