@@ -20,9 +20,14 @@ public class Movement : MonoBehaviour
     public int Gravity = 1;
     public bool clickProcessed = false;
 
+    [Header("Trail & Ambient Settings")]
+    public ParticleSystem movementTrail; 
+    public ParticleSystem ambientSpeedParticles; 
+
     [Header("Death Settings")]
     public GameObject deathParticlesPrefab; 
-    public AudioClip deathSound; // <-- NEW: Slot for your audio file!
+    public AudioClip deathSound; 
+    public AudioSource levelMusic; 
     [SerializeField] private float respawnDelay = 1.0f; 
     
     private bool isDead = false; 
@@ -30,6 +35,12 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        // Loads the saved slider volume from permanent memory so it stays consistent on respawn
+        if (levelMusic != null)
+        {
+            levelMusic.volume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+        }
     }
  
     void FixedUpdate()
@@ -132,14 +143,20 @@ public class Movement : MonoBehaviour
         isDead = true; 
         CancelInvoke(); 
 
-        // <-- NEW: Play the death sound! -->
-        if (deathSound != null)
+        if (movementTrail != null) movementTrail.Stop(); 
+        if (ambientSpeedParticles != null) ambientSpeedParticles.Stop();
+
+        if (levelMusic != null) levelMusic.Pause(); 
+
+        if (deathSound != null && Camera.main != null)
         {
-            // We play it at the camera's position so it is always loud and clear!
-            if (Camera.main != null)
-            {
-                AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position);
-            }
+            AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position);
+        }
+
+        if (Camera.main != null)
+        {
+            CameraFollow camScript = Camera.main.GetComponent<CameraFollow>();
+            if (camScript != null) camScript.TriggerShake(); 
         }
 
         if (deathParticlesPrefab != null)

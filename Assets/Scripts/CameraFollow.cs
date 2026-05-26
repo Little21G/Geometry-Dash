@@ -4,8 +4,6 @@ public class CameraFollow : MonoBehaviour
 {
     [Header("Targeting")]
     public Transform player;
-    
-    // We need to talk to your Movement script to know the current gamemode!
     private Movement playerMovement; 
 
     [Header("Geometry Dash Metrics")]
@@ -13,11 +11,19 @@ public class CameraFollow : MonoBehaviour
     public float smoothSpeedY = 5f; 
 
     [Header("Camera Deadzones")]
-    public float upDeadzone = 1.5f;   // How high the player can jump before the camera pans up
-    public float downDeadzone = 0.5f; // How far they can fall before the camera pans down
+    public float upDeadzone = 1.5f;   
+    public float downDeadzone = 0.5f; 
 
-    // We store the "ideal" floor level the camera is trying to look at
     private float targetCameraY;
+
+    [Header("Screen Shake Inspector Controls")]
+    // These are now fully customizable in the Unity Inspector!
+    [SerializeField] private float shakeDuration = 0.3f;
+    [SerializeField] private float shakeMagnitude = 0.4f;
+
+    // Internal hidden variables to track the live state of the active shake
+    private float shakeTimer = 0f;
+    private float currentShakeMagnitude = 0f;
 
     void Start()
     {
@@ -32,46 +38,46 @@ public class CameraFollow : MonoBehaviour
     {
         if (player == null || playerMovement == null) return;
 
-        // 1. Strict X Lock (Always moves forward)
+        // 1. Calculate X
         float targetX = player.position.x + offset.x;
 
-        // 2. Calculate the target Y based on the Gamemode
+        // 2. Calculate Y
         if (playerMovement.CurrentGamemode == Gamemodes.Ship)
         {
-            // --- SHIP MODE ---
-            // Do absolutely nothing to targetCameraY! 
-            // It will freeze at whatever height it was at when you hit the ship portal,
-            // creating that perfectly stationary Y-axis tunnel effect.
+            // Ship mode locks the Y axis
         }
         else
         {
-            // --- CUBE / OTHER MODES ---
-            // Calculate how far the player is from our current camera target
             float yDifference = player.position.y - targetCameraY;
 
-            // If they jump higher than our deadzone, push the target up
-            if (yDifference > upDeadzone)
-            {
-                targetCameraY = player.position.y - upDeadzone;
-            }
-            // If they fall lower than our deadzone, push the target down
-            else if (yDifference < -downDeadzone)
-            {
-                targetCameraY = player.position.y + downDeadzone;
-            }
+            if (yDifference > upDeadzone) targetCameraY = player.position.y - upDeadzone;
+            else if (yDifference < -downDeadzone) targetCameraY = player.position.y + downDeadzone;
             
-            // GD Polish: If they land on flat ground, smoothly sync back up to the floor
-            if (playerMovement.OnGround())
-            {
-                targetCameraY = player.position.y;
-            }
+            if (playerMovement.OnGround()) targetCameraY = player.position.y;
         }
 
-        // 3. Smooth Y Track
-        // We lerp towards our calculated targetCameraY + your offset
         float smoothedY = Mathf.Lerp(transform.position.y, targetCameraY + offset.y, smoothSpeedY * Time.deltaTime);
+        
+        // Base destination of the camera
+        Vector3 finalPosition = new Vector3(targetX, smoothedY, offset.z);
 
-        // 4. Apply the position
-        transform.position = new Vector3(targetX, smoothedY, offset.z);
+        // --- SCREEN SHAKE LOGIC ---
+        if (shakeTimer > 0)
+        {
+            Vector3 shakeOffset = Random.insideUnitSphere * currentShakeMagnitude;
+            shakeOffset.z = 0; // Lock Z axis so camera doesn't jitter forward/backward
+            
+            finalPosition += shakeOffset;
+            shakeTimer -= Time.deltaTime;
+        }
+
+        transform.position = finalPosition;
+    }
+
+    // Now uses your serialized field settings automatically!
+    public void TriggerShake()
+    {
+        shakeTimer = shakeDuration;
+        currentShakeMagnitude = shakeMagnitude;
     }
 }
