@@ -15,6 +15,11 @@ public class Movement : MonoBehaviour
     public float GroundCheckRadius;
     public LayerMask GroundMask;
     public Transform Sprite; 
+
+    [Header("Visuals (Sprite Swapping)")]
+    public SpriteRenderer playerSpriteRenderer;
+    public Sprite cubeSprite;
+    public Sprite shipSprite;
  
     Rigidbody2D rb;
     public int Gravity = 1;
@@ -23,6 +28,28 @@ public class Movement : MonoBehaviour
     [Header("Trail & Ambient Settings")]
     public ParticleSystem movementTrail; 
     public ParticleSystem ambientSpeedParticles; 
+
+    [Header("Dynamic Background Particle Progression")]
+    [Tooltip("How often (in seconds) the particles scale up and accelerate.")]
+    [SerializeField] private float progressionInterval = 7.0f;
+
+    [Tooltip("How much faster the particles fly to the left per interval step.")]
+    [SerializeField] private float speedIncreasePerStep = 5.0f;
+
+    [Tooltip("How much larger the speed line streaks grow per interval step.")]
+    [SerializeField] private float sizeIncreasePerStep = 0.05f;
+
+    [Tooltip("How many more speed particles spawn per second per interval step.")]
+    [SerializeField] private float spawnRateIncreasePerStep = 8.0f;
+
+    // Track original starting points so the modifiers stack smoothly on top of them
+    private float progressionTimer = 0f;
+    private int currentStepMultiplier = 0;
+    private float baseMinSpeed;
+    private float baseMaxSpeed;
+    private float baseMinSize;
+    private float baseMaxSize;
+    private float baseSpawnRate;
 
     [Header("Death Settings")]
     public GameObject deathParticlesPrefab; 
@@ -36,10 +63,42 @@ public class Movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        // Loads the saved slider volume from permanent memory so it stays consistent on respawn
         if (levelMusic != null)
         {
             levelMusic.volume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+        }
+
+        // Cache initial background particle values so we know where our baseline is
+        if (ambientSpeedParticles != null)
+        {
+            var velocityModule = ambientSpeedParticles.velocityOverLifetime;
+            baseMinSpeed = velocityModule.x.constantMin; // Usually around -25
+            baseMaxSpeed = velocityModule.x.constantMax; // Usually around -40
+
+            var mainModule = ambientSpeedParticles.main;
+            baseMinSize = mainModule.startSize.constantMin; // Usually around 0.05
+            baseMaxSize = mainModule.startSize.constantMax; // Usually around 0.15
+
+            var emissionModule = ambientSpeedParticles.emission;
+            baseSpawnRate = emissionModule.rateOverTime.constant; // Usually around 30
+        }
+    }
+
+    void Update()
+    {
+        if (isDead) return;
+
+        // Run progression math if background particles are hooked up
+        if (ambientSpeedParticles != null)
+        {
+            progressionTimer += Time.deltaTime;
+
+            if (progressionTimer >= progressionInterval)
+            {
+                progressionTimer = 0f;
+                currentStepMultiplier++;
+                ApplyParticleProgression();
+            }
         }
     }
  
@@ -49,6 +108,25 @@ public class Movement : MonoBehaviour
 
         transform.position += Vector3.right * SpeedValues[(int)CurrentSpeed] * Time.deltaTime;
         Invoke(CurrentGamemode.ToString(), 0);
+    }
+
+    private void ApplyParticleProgression()
+    {
+        // 1. Scale Velocity Over Lifetime (Make them zoom faster to the left)
+        var velocityModule = ambientSpeedParticles.velocityOverLifetime;
+        float speedOffset = currentStepMultiplier * speedIncreasePerStep;
+        // Keep values negative so they continue moving from right -> left
+        velocityModule.x = new ParticleSystem.MinMaxCurve(baseMinSpeed - speedOffset, baseMaxSpeed - speedOffset);
+
+        // 2. Scale Main Module Sizes (Make them visually thicker/longer)
+        var mainModule = ambientSpeedParticles.main;
+        float sizeOffset = currentStepMultiplier * sizeIncreasePerStep;
+        mainModule.startSize = new ParticleSystem.MinMaxCurve(baseMinSize + sizeOffset, baseMaxSize + sizeOffset);
+
+        // 3. Scale Emission Module (Make the air look denser with particles)
+        var emissionModule = ambientSpeedParticles.emission;
+        float totalNewRate = baseSpawnRate + (currentStepMultiplier * spawnRateIncreasePerStep);
+        emissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(totalNewRate);
     }
  
     public bool OnGround()
@@ -110,9 +188,24 @@ public class Movement : MonoBehaviour
     {
         switch (State)
         {
-            case 0: CurrentSpeed = Speed; break;
-            case 1: CurrentGamemode = Gamemode; break;
-            case 2: Gravity = gravity; rb.gravityScale = Mathf.Abs(rb.gravityScale) * gravity; gravityFlipped = true; break;
+            case 0: 
+                CurrentSpeed = Speed; 
+                break;
+            case 1: 
+                CurrentGamemode = Gamemode; 
+                
+                // Swap the picture based on the Gamemode!
+                if (playerSpriteRenderer != null)
+                {
+                    if (Gamemode == Gamemodes.Cube && cubeSprite != null) playerSpriteRenderer.sprite = cubeSprite;
+                    else if (Gamemode == Gamemodes.Ship && shipSprite != null) playerSpriteRenderer.sprite = shipSprite;
+                }
+                break;
+            case 2: 
+                Gravity = gravity; 
+                rb.gravityScale = Mathf.Abs(rb.gravityScale) * gravity; 
+                gravityFlipped = true; 
+                break;
         }
     }
  
