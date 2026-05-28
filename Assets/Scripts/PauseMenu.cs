@@ -14,6 +14,9 @@ public class PauseMenu : MonoBehaviour
     [Header("Audio Reference")]
     public AudioSource gameMusic; 
 
+    [Header("Scene Management")]
+    public string mainMenuSceneName = "MainMenuScene"; // The exact name of your main menu scene
+
     void Start()
     {
         pauseScreenUI.SetActive(false);
@@ -30,17 +33,14 @@ public class PauseMenu : MonoBehaviour
         pauseScreenUI.SetActive(true); 
         Time.timeScale = 0f;           
 
-        // Pause the music
         if (gameMusic != null)
         {
             gameMusic.Pause();
         }
 
-        // Get the scores
         float current = ScoreManager.instance.currentScore;
         float high = PlayerPrefs.GetFloat("HighScore", 0f);
 
-        // Update the menu text 
         currentScoreText.text = "Score: " + Mathf.FloorToInt(current).ToString();
         highScoreText.text = "High Score: " + Mathf.FloorToInt(high).ToString();
     }
@@ -50,7 +50,6 @@ public class PauseMenu : MonoBehaviour
         pauseScreenUI.SetActive(false); 
         Time.timeScale = 1f;            
 
-        // Unpause the music
         if (gameMusic != null)
         {
             gameMusic.UnPause();
@@ -63,10 +62,11 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void QuitGame()
+    // --- UPDATED QUIT METHOD ---
+    public void QuitToMainMenu()
     {
-        Time.timeScale = 1f;
-        Application.Quit(); 
+        Time.timeScale = 1f; // CRITICAL: Always unfreeze time before leaving!
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 
     public void SetVolume(float volume)
@@ -75,12 +75,5 @@ public class PauseMenu : MonoBehaviour
         {
             gameMusic.volume = volume;
         }
-    }
-    
-    // Optional: Add this to a button to reset your score if you get stuck testing!
-    public void ResetHighScore()
-    {
-        PlayerPrefs.DeleteKey("HighScore");
-        Debug.Log("High Score Reset to 0!");
     }
 }

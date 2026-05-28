@@ -1,0 +1,690 @@
+fileFormatVersion: 2
+guid: dde99d3875fc845a0909c63b8b344385
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6266209444019642518
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_0
+  - first:
+      213: -7497165088681570331
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_1
+  - first:
+      213: -2845186982197016778
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_2
+  - first:
+      213: -4913336930568631287
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_3
+  - first:
+      213: 5996359159530696961
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_4
+  - first:
+      213: 8791544532904256627
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_5
+  - first:
+      213: -5842732281619458398
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_6
+  - first:
+      213: -6494200753075494592
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_7
+  - first:
+      213: -7166021098080252982
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_8
+  - first:
+      213: 6978070818540964607
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_9
+  - first:
+      213: 1176507572361423628
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_10
+  - first:
+      213: -7884860670361430123
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_11
+  - first:
+      213: -3476809457734787895
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_12
+  - first:
+      213: 3175950394588702782
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_13
+  - first:
+      213: 2642457241290443429
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_14
+  - first:
+      213: 6671816487548396219
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_15
+  - first:
+      213: 4274472498922168
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_16
+  - first:
+      213: -7450779812774358263
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_17
+  - first:
+      213: -673078381319947708
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_18
+  - first:
+      213: -1410740127333187118
+    second: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+      Menu)_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_0
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 264
+        width: 213
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6902dfe1a4c06f650800000000000000
+      internalID: 6266209444019642518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_1
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 289
+        width: 163
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5efcca2d218b4f790800000000000000
+      internalID: -7497165088681570331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_2
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 308
+        width: 90
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 637c49e938dd388d0800000000000000
+      internalID: -2845186982197016778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_3
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 332
+        width: 79
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90c06a7f71250dbb0800000000000000
+      internalID: -4913336930568631287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_4
+      rect:
+        serializedVersion: 2
+        x: 752
+        y: 318
+        width: 105
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 101bc71b2e8573350800000000000000
+      internalID: 5996359159530696961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_5
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 367
+        width: 158
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37429ce4c27d10a70800000000000000
+      internalID: 8791544532904256627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_6
+      rect:
+        serializedVersion: 2
+        x: 871
+        y: 314
+        width: 184
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a65d5c22f17aeea0800000000000000
+      internalID: -5842732281619458398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_7
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 104
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0416cd4a2d6ffd5a0800000000000000
+      internalID: -6494200753075494592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_8
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 98
+        width: 38
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acbc8fb47cd2d8c90800000000000000
+      internalID: -7166021098080252982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_9
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 98
+        width: 31
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffa47a4207617d060800000000000000
+      internalID: 6978070818540964607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_10
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 98
+        width: 49
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0be826576bc35010800000000000000
+      internalID: 1176507572361423628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_11
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 98
+        width: 31
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59798affef8539290800000000000000
+      internalID: -7884860670361430123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_12
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 104
+        width: 20
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ccdff71834efbfc0800000000000000
+      internalID: -3476809457734787895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_13
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 104
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e38a8b59e0e331c20800000000000000
+      internalID: 3175950394588702782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_14
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 122
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5aa86415cd4eba420800000000000000
+      internalID: 2642457241290443429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_15
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 15
+        width: 213
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb2aae22fbd079c50800000000000000
+      internalID: 6671816487548396219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_16
+      rect:
+        serializedVersion: 2
+        x: 545
+        y: 38
+        width: 163
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b286ee2c9f2f0000800000000000000
+      internalID: 4274472498922168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_17
+      rect:
+        serializedVersion: 2
+        x: 735
+        y: 38
+        width: 163
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 903dee77c33899890800000000000000
+      internalID: -7450779812774358263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_18
+      rect:
+        serializedVersion: 2
+        x: 918
+        y: 38
+        width: 184
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44afd6f37ceb8a6f0800000000000000
+      internalID: -673078381319947708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main
+        Menu)_19
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 104
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d18aef145b0c6ce0800000000000000
+      internalID: -1410740127333187118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_0: 6266209444019642518
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_1: -7497165088681570331
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_10: 1176507572361423628
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_11: -7884860670361430123
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_12: -3476809457734787895
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_13: 3175950394588702782
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_14: 2642457241290443429
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_15: 6671816487548396219
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_16: 4274472498922168
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_17: -7450779812774358263
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_18: -673078381319947708
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_19: -1410740127333187118
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_2: -2845186982197016778
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_3: -4913336930568631287
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_4: 5996359159530696961
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_5: 8791544532904256627
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_6: -5842732281619458398
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_7: -6494200753075494592
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_8: -7166021098080252982
+      Custom _ Edited - Geometry Dash Customs - Miscellaneous - Buttons (Main Menu)_9: 6978070818540964607
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
