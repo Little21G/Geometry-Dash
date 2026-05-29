@@ -2,10 +2,6 @@ using UnityEngine;
 
 public class PlayerAppearance : MonoBehaviour
 {
-    [Header("Sprite Layers")]
-    public SpriteRenderer primarySpriteRenderer;
-    public SpriteRenderer secondarySpriteRenderer;
-
     [Header("Default Colors (Hex Codes)")]
     public string defaultPrimary = "#00FFFF"; // Cyan
     public string defaultSecondary = "#FF00FF"; // Magenta
@@ -17,22 +13,27 @@ public class PlayerAppearance : MonoBehaviour
 
     public void LoadAndApplyColors()
     {
-        // 1. Get the saved colors from the menu (or use the defaults if none exist yet)
         string primaryHex = PlayerPrefs.GetString("PrimaryColor", defaultPrimary);
         string secondaryHex = PlayerPrefs.GetString("SecondaryColor", defaultSecondary);
 
-        // 2. Convert the Hex text into actual Unity Colors
-        Color primaryColor;
-        Color secondaryColor;
+        // Safeguard: Ensure hex codes have the '#' symbol
+        if (!primaryHex.StartsWith("#")) primaryHex = "#" + primaryHex;
+        if (!secondaryHex.StartsWith("#")) secondaryHex = "#" + secondaryHex;
 
-        if (ColorUtility.TryParseHtmlString(primaryHex, out primaryColor))
-        {
-            if (primarySpriteRenderer != null) primarySpriteRenderer.color = primaryColor;
-        }
+        // Get the single SpriteRenderer attached to this GameObject
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 
-        if (ColorUtility.TryParseHtmlString(secondaryHex, out secondaryColor))
+        if (spriteRenderer != null && spriteRenderer.material != null)
         {
-            if (secondarySpriteRenderer != null) secondarySpriteRenderer.color = secondaryColor;
+            if (ColorUtility.TryParseHtmlString(primaryHex, out Color primaryColor))
+            {
+                spriteRenderer.material.SetColor("_PrimaryColor", primaryColor);
+            }
+
+            if (ColorUtility.TryParseHtmlString(secondaryHex, out Color secondaryColor))
+            {
+                spriteRenderer.material.SetColor("_SecondaryColor", secondaryColor);
+            }
         }
     }
 }

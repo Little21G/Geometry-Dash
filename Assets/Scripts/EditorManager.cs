@@ -10,22 +10,24 @@ public class EditorManager : MonoBehaviour
         public string colorName;
         public string hexCode;
         public float requiredScore;
-        public Button primaryButton;   // Link your UI buttons here
-        public Button secondaryButton; // Link your UI buttons here
+        public Button primaryButton;   
+        public Button secondaryButton; 
     }
 
     [Header("Milestone Definitions")]
     public ColorMilestone[] colorMilestones;
 
+    [Header("Live Menu Preview")]
+    [Tooltip("Drag your PlayerColorMaterial here to update the actual character preview!")]
+    public Material previewMaterial; // <-- THIS talks to the shader!
+
     private float playerHighScore;
 
     void Start()
     {
-        // 1. Fetch the actual high score saved by ScoreManager
         playerHighScore = PlayerPrefs.GetFloat("HighScore", 0f);
-        
-        // 2. Refresh all buttons to see what is unlocked
         CheckLocks();
+        UpdatePreviewVisuals();
     }
 
     void CheckLocks()
@@ -34,21 +36,16 @@ public class EditorManager : MonoBehaviour
         {
             bool isUnlocked = playerHighScore >= milestone.requiredScore;
 
-            // Handle Primary Row Button
             if (milestone.primaryButton != null)
             {
                 UpdateButtonUI(milestone.primaryButton, isUnlocked, milestone.requiredScore, milestone.colorName);
-                
-                // If unlocked, allow clicking. If locked, disable clicking!
                 milestone.primaryButton.interactable = isUnlocked;
                 
-                // Hook up the click behavior safely
                 string hex = milestone.hexCode;
                 milestone.primaryButton.onClick.RemoveAllListeners();
                 milestone.primaryButton.onClick.AddListener(() => SelectPrimaryColor(hex));
             }
 
-            // Handle Secondary Row Button
             if (milestone.secondaryButton != null)
             {
                 UpdateButtonUI(milestone.secondaryButton, isUnlocked, milestone.requiredScore, milestone.colorName);
@@ -66,14 +63,8 @@ public class EditorManager : MonoBehaviour
         TextMeshProUGUI btnText = btn.GetComponentInChildren<TextMeshProUGUI>();
         if (btnText != null)
         {
-            if (unlocked)
-            {
-                btnText.text = colName; // Shows "Red", "Blue", etc.
-            }
-            else
-            {
-                btnText.text = "🔒 " + Mathf.FloorToInt(reqScore).ToString(); // Shows "🔒 2500"
-            }
+            if (unlocked) btnText.text = colName;
+            else btnText.text = "🔒 " + Mathf.FloorToInt(reqScore).ToString();
         }
     }
 
@@ -81,13 +72,36 @@ public class EditorManager : MonoBehaviour
     {
         PlayerPrefs.SetString("PrimaryColor", hexColor);
         PlayerPrefs.Save();
-        Debug.Log("Equipped Primary Hex: " + hexColor);
+        UpdatePreviewVisuals(); 
     }
 
     public void SelectSecondaryColor(string hexColor)
     {
         PlayerPrefs.SetString("SecondaryColor", hexColor);
         PlayerPrefs.Save();
-        Debug.Log("Equipped Secondary Hex: " + hexColor);
+        UpdatePreviewVisuals(); 
+    }
+
+    private void UpdatePreviewVisuals()
+    {
+        string primaryHex = PlayerPrefs.GetString("PrimaryColor", "#00FFFF");
+        string secondaryHex = PlayerPrefs.GetString("SecondaryColor", "#FF00FF");
+
+        // Safeguard: Ensure hex codes have the '#' symbol, otherwise Unity's color converter fails silently
+        if (!primaryHex.StartsWith("#")) primaryHex = "#" + primaryHex;
+        if (!secondaryHex.StartsWith("#")) secondaryHex = "#" + secondaryHex;
+
+        if (previewMaterial != null)
+        {
+            if (ColorUtility.TryParseHtmlString(primaryHex, out Color primaryColor))
+            {
+                previewMaterial.SetColor("_PrimaryColor", primaryColor);
+            }
+
+            if (ColorUtility.TryParseHtmlString(secondaryHex, out Color secondaryColor))
+            {
+                previewMaterial.SetColor("_SecondaryColor", secondaryColor);
+            }
+        }
     }
 }

@@ -32,17 +32,13 @@ public class Movement : MonoBehaviour
     [Header("Dynamic Background Particle Progression")]
     [Tooltip("How often (in seconds) the particles scale up and accelerate.")]
     [SerializeField] private float progressionInterval = 7.0f;
-
     [Tooltip("How much faster the particles fly to the left per interval step.")]
     [SerializeField] private float speedIncreasePerStep = 5.0f;
-
     [Tooltip("How much larger the speed line streaks grow per interval step.")]
     [SerializeField] private float sizeIncreasePerStep = 0.05f;
-
     [Tooltip("How many more speed particles spawn per second per interval step.")]
     [SerializeField] private float spawnRateIncreasePerStep = 8.0f;
 
-    // Track original starting points so the modifiers stack smoothly on top of them
     private float progressionTimer = 0f;
     private int currentStepMultiplier = 0;
     private float baseMinSpeed;
@@ -50,6 +46,14 @@ public class Movement : MonoBehaviour
     private float baseMinSize;
     private float baseMaxSize;
     private float baseSpawnRate;
+
+    [Header("Gameplay Difficulty Progression")]
+    [Tooltip("How many points before the physics speed up.")]
+    public float scoreInterval = 750f;
+    [Tooltip("How much the game speeds up per interval (0.03 = 3% faster).")]
+    public float timeScaleIncrease = 0.03f; 
+    
+    private float nextDifficultyMilestone;
 
     [Header("Death Settings")]
     public GameObject deathParticlesPrefab; 
@@ -63,30 +67,49 @@ public class Movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
+        // 1. Reset time speed and set our first score milestone!
+        Time.timeScale = 1f; 
+        nextDifficultyMilestone = scoreInterval;
+
         if (levelMusic != null)
         {
             levelMusic.volume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+            levelMusic.pitch = 1f; // Ensure music isn't sped up on respawn
         }
 
         // Cache initial background particle values so we know where our baseline is
         if (ambientSpeedParticles != null)
         {
             var velocityModule = ambientSpeedParticles.velocityOverLifetime;
-            baseMinSpeed = velocityModule.x.constantMin; // Usually around -25
-            baseMaxSpeed = velocityModule.x.constantMax; // Usually around -40
+            baseMinSpeed = velocityModule.x.constantMin; 
+            baseMaxSpeed = velocityModule.x.constantMax; 
 
             var mainModule = ambientSpeedParticles.main;
-            baseMinSize = mainModule.startSize.constantMin; // Usually around 0.05
-            baseMaxSize = mainModule.startSize.constantMax; // Usually around 0.15
+            baseMinSize = mainModule.startSize.constantMin; 
+            baseMaxSize = mainModule.startSize.constantMax; 
 
             var emissionModule = ambientSpeedParticles.emission;
-            baseSpawnRate = emissionModule.rateOverTime.constant; // Usually around 30
+            baseSpawnRate = emissionModule.rateOverTime.constant; 
         }
     }
 
     void Update()
     {
         if (isDead) return;
+
+        // --- GLOBAL DIFFICULTY PROGRESSION ---
+        // Talk to your ScoreManager. If we pass the milestone, increase global time scale!
+        if (ScoreManager.instance != null && ScoreManager.instance.currentScore >= nextDifficultyMilestone)
+        {
+            nextDifficultyMilestone += scoreInterval;
+            Time.timeScale += timeScaleIncrease;
+
+            // Pitching up the music slightly makes the speed increase feel way more intense!
+            if (levelMusic != null)
+            {
+                levelMusic.pitch = Time.timeScale;
+            }
+        }
 
         // Run progression math if background particles are hooked up
         if (ambientSpeedParticles != null)
@@ -106,24 +129,21 @@ public class Movement : MonoBehaviour
     {
         if (isDead) return;
 
+        // Because we are using Time.deltaTime, scaling timeScale automatically speeds this up!
         transform.position += Vector3.right * SpeedValues[(int)CurrentSpeed] * Time.deltaTime;
         Invoke(CurrentGamemode.ToString(), 0);
     }
 
     private void ApplyParticleProgression()
     {
-        // 1. Scale Velocity Over Lifetime (Make them zoom faster to the left)
         var velocityModule = ambientSpeedParticles.velocityOverLifetime;
         float speedOffset = currentStepMultiplier * speedIncreasePerStep;
-        // Keep values negative so they continue moving from right -> left
         velocityModule.x = new ParticleSystem.MinMaxCurve(baseMinSpeed - speedOffset, baseMaxSpeed - speedOffset);
 
-        // 2. Scale Main Module Sizes (Make them visually thicker/longer)
         var mainModule = ambientSpeedParticles.main;
         float sizeOffset = currentStepMultiplier * sizeIncreasePerStep;
         mainModule.startSize = new ParticleSystem.MinMaxCurve(baseMinSize + sizeOffset, baseMaxSize + sizeOffset);
 
-        // 3. Scale Emission Module (Make the air look denser with particles)
         var emissionModule = ambientSpeedParticles.emission;
         float totalNewRate = baseSpawnRate + (currentStepMultiplier * spawnRateIncreasePerStep);
         emissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(totalNewRate);
@@ -194,7 +214,6 @@ public class Movement : MonoBehaviour
             case 1: 
                 CurrentGamemode = Gamemode; 
                 
-                // Swap the picture based on the Gamemode!
                 if (playerSpriteRenderer != null)
                 {
                     if (Gamemode == Gamemodes.Cube && cubeSprite != null) playerSpriteRenderer.sprite = cubeSprite;
@@ -235,6 +254,10 @@ public class Movement : MonoBehaviour
 
         isDead = true; 
         CancelInvoke(); 
+
+        // CRITICAL: Drop the game speed immediately back to normal when you die so 
+        // particles and death delay times don't finish instantly in fast-forward!
+        Time.timeScale = 1f;
 
         if (movementTrail != null) movementTrail.Stop(); 
         if (ambientSpeedParticles != null) ambientSpeedParticles.Stop();
